@@ -8,7 +8,7 @@ import tf2_ros
 from geometry_msgs.msg import TransformStamped
 from nav_msgs.msg import Odometry
 
-
+# Connect robot base (child) to world (parent) using Odometry
 class CamBotOdomToTf(Node):
 
     def __init__(self, robot_base_frame="camera_bot_base_link"):
@@ -28,9 +28,13 @@ class CamBotOdomToTf(Node):
         self.get_logger().warning("odom_to_tf_broadcaster_node READY!")
 
     def odom_callback(self, msg):
-        # print the log info in the terminal
+        # record latest odometry
         self.update_data(msg)
+
+        # print the log info in the terminal
         self.get_logger().debug('Odom VALUE: "%s"' % str(self.cam_bot_odom))
+
+        # broadcast transform from world to robot base
         self.broadcast_new_tf()
 
     def update_data(self, msg):
