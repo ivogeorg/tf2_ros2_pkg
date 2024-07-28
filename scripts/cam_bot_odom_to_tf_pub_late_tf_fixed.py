@@ -20,14 +20,14 @@ class CamBotOdomToTf(Node):
         self.subscriber = self.create_subscription(
             Odometry,
             '/cam_bot_odom',
-            self.listener_callback,
+            self.odom_callback,
             QoSProfile(depth=1, durability=DurabilityPolicy.VOLATILE, reliability=ReliabilityPolicy.BEST_EFFORT))
 
         self.br = tf2_ros.TransformBroadcaster(self)
 
         self.get_logger().warning("odom_to_tf_broadcaster_node READY!")
 
-    def listener_callback(self, msg):
+    def odom_callback(self, msg):
         # print the log info in the terminal
         self.update_data(msg)
         self.get_logger().debug('Odom VALUE: "%s"' % str(self.cam_bot_odom))
