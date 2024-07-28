@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
 
+    <!-- Connects `odom` (child) to `world` (parent) frames. `odom` is the root of Turtle's subtree -->
     <include file="$(find-pkg-share tf2_ros2_pkg)/launch/static_transform_pub_world_to_odom.launch.py"/>
 
-    <!-- <node pkg="tf2_ros2_pkg" exec="cam_bot_odom_to_tf_pub_late_tf_fixed.py" name="cam_bot_odom_to_tf_pub_late_tf_fixed_node"> -->
+    <!-- Subscribes to `odom` and publishes a transform between `world` and Cam Bot `robot_base_frame` -->
     <node pkg="tf2_ros2_pkg" exec="cam_bot_odom_to_tf_pub_late_tf_fixed.py" name="odom_to_tf_broadcaster_node">
     </node>
 
+    <!-- Uses `TransformListener` to move Cam Bot to a frame published to topic `/destination_frame` -->
     <node pkg="tf2_ros2_pkg" exec="move_generic_model.py" name="force_move_cam_bot_node">
     </node>
 

@@ -9,6 +9,12 @@
 5. `ros2 topic pub /destination_frame std_msgs/msg/String "data: 'front_turtle_frame'"`  
 6. `ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/turtle_cmd_vel`
 
+#### Cam Bot & Turtle
+
+| Initial | After world2cam_bot_base_link | After world2odom |
+| --- | --- | --- |
+| | ![After world2cam_bot_base_link](assets/frames_after_world2cam_bot_base_link_tf_pub.png) | ![After world2odom](assets/frames_after_world2odom_static_tf_pub.png) |
+
 #### Unicycle
 
 | Mesh | Spawned | TF in Rviz2 |
@@ -17,6 +23,6 @@
 
 | Spawn w/o RSP | Spawn w/ RSP |
 | --- | --- |
-
+| ![Without robot_state_publisher](assets/unicycle_frames_spawn_wo_robot_state_pub.png) | ![With robot_state_publisher](assets/unicycle_frames_spawn_w_robot_state_pub.png) |
 
 
