@@ -16,6 +16,8 @@
 
 | Spawn w/o RSP | Spawn w/ RSP |
 | --- | --- |
+| ![Without robot_state_publisher](assets/unicycle_frames_spawn_wo_robot_state_pub.png) | | ![With robot_state_publisher](assets/unicycle_frames_spawn_w_robot_state_pub.png) |
+
 
 
 
