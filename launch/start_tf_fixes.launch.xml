@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <include file="$(find-pkg-share tf2_ros2_pkg)/launch/static_transform_pub_world_to_odom.launch.py"/>
+
+    <!-- <node pkg="tf2_ros2_pkg" exec="cam_bot_odom_to_tf_pub_late_tf_fixed.py" name="cam_bot_odom_to_tf_pub_late_tf_fixed_node"> -->
+    <node pkg="tf2_ros2_pkg" exec="cam_bot_odom_to_tf_pub_late_tf_fixed.py" name="odom_to_tf_broadcaster_node">
+    </node>
+
+    <node pkg="tf2_ros2_pkg" exec="move_generic_model.py" name="force_move_cam_bot_node">
+    </node>
+
+</launch>
