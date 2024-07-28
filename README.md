@@ -13,7 +13,7 @@
 
 | Initial | After world2cam_bot_base_link | After world2odom |
 | --- | --- | --- |
-| | ![After world2cam_bot_base_link](assets/frames_after_world2cam_bot_base_link_tf_pub.png) | ![After world2odom](assets/frames_after_world2odom_static_tf_pub.png) |
+| ![Initial frames](assets/frames_initial.png) | ![After world2cam_bot_base_link](assets/frames_after_world2cam_bot_base_link_tf_pub.png) | ![After world2odom](assets/frames_after_world2odom_static_tf_pub.png) |
 
 #### Unicycle
 
