@@ -43,6 +43,7 @@ _**Note:** Can Ctrl-C as this is a one-time publication of a static transform._
 
 ##### 2. Examining the environment
 
+Services:  
 ```
 user:~/ros2_ws$ ros2 service list
 /apply_joint_effort
@@ -162,7 +163,10 @@ user:~/ros2_ws$ ros2 service list | grep entity_state
 
 user:~/ros2_ws$ ros2 service type /cam_bot/set_entity_state
 gazebo_msgs/srv/SetEntityState
+```  
 
+Intefaces:  
+```
 user:~/ros2_ws$ ros2 interface show gazebo_msgs/srv/SetEntityState
 gazebo_msgs/EntityState state   # Entity state to set to.
         string name
@@ -236,7 +240,9 @@ gazebo_msgs/EntityState state        # Contains pose and twist.
         string reference_frame
                                     # Leaving empty or "world" defaults to inertial world frame.
 bool success                         # Return true if get was successful. If false, the state contains garbage.
-```
+```  
+
+Nodes:  
 ```
 user:~/ros2_ws$ ros2 node list
 /box_bot_joint_state
@@ -282,6 +288,215 @@ user:~/ros2_ws$ ros2 node info /cam_bot/gazebo_ros_state
 
   Action Clients:
 
+user:~/ros2_ws$ ros2 node info /gazebo_ros_force
+/gazebo_ros_force
+  Subscribers:
+    /cam_bot_force: geometry_msgs/msg/Wrench
+    /clock: rosgraph_msgs/msg/Clock
+    /parameter_events: rcl_interfaces/msg/ParameterEvent
+  Publishers:
+    /parameter_events: rcl_interfaces/msg/ParameterEvent
+    /rosout: rcl_interfaces/msg/Log
+  Service Servers:
+    /gazebo_ros_force/describe_parameters: rcl_interfaces/srv/DescribeParameters
+    /gazebo_ros_force/get_parameter_types: rcl_interfaces/srv/GetParameterTypes
+    /gazebo_ros_force/get_parameters: rcl_interfaces/srv/GetParameters
+    /gazebo_ros_force/list_parameters: rcl_interfaces/srv/ListParameters
+    /gazebo_ros_force/set_parameters: rcl_interfaces/srv/SetParameters
+    /gazebo_ros_force/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically
+  Service Clients:
+
+  Action Servers:
+
+  Action Clients:
+
+user:~/ros2_ws$ ros2 node info /gazebo_ros_p3d
+/gazebo_ros_p3d
+  Subscribers:
+    /clock: rosgraph_msgs/msg/Clock
+    /parameter_events: rcl_interfaces/msg/ParameterEvent
+  Publishers:
+    /cam_bot_odom: nav_msgs/msg/Odometry
+    /parameter_events: rcl_interfaces/msg/ParameterEvent
+    /rosout: rcl_interfaces/msg/Log
+  Service Servers:
+    /gazebo_ros_p3d/describe_parameters: rcl_interfaces/srv/DescribeParameters
+    /gazebo_ros_p3d/get_parameter_types: rcl_interfaces/srv/GetParameterTypes
+    /gazebo_ros_p3d/get_parameters: rcl_interfaces/srv/GetParameters
+    /gazebo_ros_p3d/list_parameters: rcl_interfaces/srv/ListParameters
+    /gazebo_ros_p3d/set_parameters: rcl_interfaces/srv/SetParameters
+    /gazebo_ros_p3d/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically
+  Service Clients:
+
+  Action Servers:
+
+  Action Clients:
+
+user:~/ros2_ws$ ros2 node info /odom_to_tf_broadcaster_node
+/odom_to_tf_broadcaster_node
+  Subscribers:
+    /cam_bot_odom: nav_msgs/msg/Odometry
+  Publishers:
+    /parameter_events: rcl_interfaces/msg/ParameterEvent
+    /rosout: rcl_interfaces/msg/Log
+    /tf: tf2_msgs/msg/TFMessage
+  Service Servers:
+    /odom_to_tf_broadcaster_node/describe_parameters: rcl_interfaces/srv/DescribeParameters
+    /odom_to_tf_broadcaster_node/get_parameter_types: rcl_interfaces/srv/GetParameterTypes
+    /odom_to_tf_broadcaster_node/get_parameters: rcl_interfaces/srv/GetParameters
+    /odom_to_tf_broadcaster_node/list_parameters: rcl_interfaces/srv/ListParameters
+    /odom_to_tf_broadcaster_node/set_parameters: rcl_interfaces/srv/SetParameters
+    /odom_to_tf_broadcaster_node/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically
+  Service Clients:
+
+  Action Servers:
+
+  Action Clients:
+
+user:~/ros2_ws$ ros2 node info /static_transform_publisher_turtle_odom
+/static_transform_publisher_turtle_odom
+  Subscribers:
+    /parameter_events: rcl_interfaces/msg/ParameterEvent
+  Publishers:
+    /parameter_events: rcl_interfaces/msg/ParameterEvent
+    /rosout: rcl_interfaces/msg/Log
+    /tf_static: tf2_msgs/msg/TFMessage
+  Service Servers:
+    /static_transform_publisher_turtle_odom/describe_parameters: rcl_interfaces/srv/DescribeParameters
+    /static_transform_publisher_turtle_odom/get_parameter_types: rcl_interfaces/srv/GetParameterTypes
+    /static_transform_publisher_turtle_odom/get_parameters: rcl_interfaces/srv/GetParameters
+    /static_transform_publisher_turtle_odom/list_parameters: rcl_interfaces/srv/ListParameters
+    /static_transform_publisher_turtle_odom/set_parameters: rcl_interfaces/srv/SetParameters
+    /static_transform_publisher_turtle_odom/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically
+  Service Clients:
+
+  Action Servers:
+
+  Action Clients:
+
+```  
+
+Topics:  
+```
+user:~/ros2_ws$ ros2 topic list
+/cam_bot/link_states
+/cam_bot/model_states_demo
+/cam_bot_cmd_vel
+/cam_bot_force
+/cam_bot_odom
+/cam_bot_robot_description
+/camera/camera_info
+/camera/image_raw
+/clicked_point
+/clock
+/destination_frame
+/goal_pose
+/initialpose
+/joint_states
+/parameter_events
+/performance_metrics
+/robot_description
+/rosout
+/tf
+/tf_static
+/turtle_cmd_vel
+/turtle_odom
+/turtle_robot_description
+user:~/ros2_ws$
+```  
+```
+user:~/ros2_ws$ ros2 topic info /cam_bot_force -v
+Type: geometry_msgs/msg/Wrench
+
+Publisher count: 1
+
+Node name: cam_bot_force_node
+Node namespace: /
+Topic type: geometry_msgs/msg/Wrench
+Endpoint type: PUBLISHER
+GID: 1a.dc.10.01.7e.7b.e5.c1.ed.5e.9d.fb.00.00.15.03.00.00.00.00.00.00.00.00
+QoS profile:
+  Reliability: RELIABLE
+  Durability: VOLATILE
+  Lifespan: 9223372036854775807 nanoseconds
+  Deadline: 9223372036854775807 nanoseconds
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: 9223372036854775807 nanoseconds
+
+Subscription count: 1
+
+Node name: gazebo_ros_force
+Node namespace: /
+Topic type: geometry_msgs/msg/Wrench
+Endpoint type: SUBSCRIPTION
+GID: 04.81.10.01.26.b4.aa.cd.06.73.7c.09.00.00.8b.04.00.00.00.00.00.00.00.00
+QoS profile:
+  Reliability: RELIABLE
+  Durability: VOLATILE
+  Lifespan: 9223372036854775807 nanoseconds
+  Deadline: 9223372036854775807 nanoseconds
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: 9223372036854775807 nanoseconds
+
+user:~/ros2_ws$ ros2 topic info /cam_bot/model_states_demo -v
+Type: gazebo_msgs/msg/ModelStates
+
+Publisher count: 1
+
+Node name: gazebo_ros_state
+Node namespace: /cam_bot
+Topic type: gazebo_msgs/msg/ModelStates
+Endpoint type: PUBLISHER
+GID: 04.81.10.01.26.b4.aa.cd.06.73.7c.09.00.00.42.03.00.00.00.00.00.00.00.00
+QoS profile:
+  Reliability: RELIABLE
+  Durability: VOLATILE
+  Lifespan: 9223372036854775807 nanoseconds
+  Deadline: 9223372036854775807 nanoseconds
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: 9223372036854775807 nanoseconds
+
+Subscription count: 0
+
+user:~/ros2_ws$ ros2 topic info /cam_bot/link_states -v
+Type: gazebo_msgs/msg/LinkStates
+
+Publisher count: 1
+
+Node name: gazebo_ros_state
+Node namespace: /cam_bot
+Topic type: gazebo_msgs/msg/LinkStates
+Endpoint type: PUBLISHER
+GID: 04.81.10.01.26.b4.aa.cd.06.73.7c.09.00.00.43.03.00.00.00.00.00.00.00.00
+QoS profile:
+  Reliability: RELIABLE
+  Durability: VOLATILE
+  Lifespan: 9223372036854775807 nanoseconds
+  Deadline: 9223372036854775807 nanoseconds
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: 9223372036854775807 nanoseconds
+
+Subscription count: 0
+
+user:~/ros2_ws$ ros2 topic info /destination_frame -v
+Type: std_msgs/msg/String
+
+Publisher count: 0
+
+Subscription count: 1
+
+Node name: force_move_cam_bot_node
+Node namespace: /
+Topic type: std_msgs/msg/String
+Endpoint type: SUBSCRIPTION
+GID: 29.26.10.01.c4.7d.05.d4.70.fb.a7.91.00.00.16.04.00.00.00.00.00.00.00.00
+QoS profile:
+  Reliability: RELIABLE
+  Durability: VOLATILE
+  Lifespan: 9223372036854775807 nanoseconds
+  Deadline: 9223372036854775807 nanoseconds
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: 9223372036854775807 nanoseconds
 ```
 
 #### Unicycle
