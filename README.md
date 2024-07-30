@@ -41,7 +41,8 @@ ros2 run tf2_ros2_pkg static_broadcaster_front_turtle_frame.py turtle_chassis fr
 ```  
 _**Note:** Can Ctrl-C as this is a one-time publication of a static transform._  
 
-Examine environment:  
+##### 2. Examining the environment
+
 ```
 user:~/ros2_ws$ ros2 service list
 /apply_joint_effort
