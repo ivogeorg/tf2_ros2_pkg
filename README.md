@@ -18,6 +18,8 @@
 
 #### TF Listener
 
+TF Listener and `EntityState` example based on the [turtle_tf_3d_ros2](https://github.com/ivogeorg/turtle_3d.git) repository. All the mentioned files below can be found there. The `meshes` directory was ignored because it was 470MB and not important for the research below. The file declaring a class `CamBotMove` is [here](https://github.com/ivogeorg/turtle_3d/blob/main/scripts/move_generic_model.py).  
+
 ##### 1. Launching
 
 Terminal 1:  
@@ -40,6 +42,11 @@ source install/setup.bash
 ros2 run tf2_ros2_pkg static_broadcaster_front_turtle_frame.py turtle_chassis front_turtle_frame 0.4 0 0.4 0 0.7 3.1416
 ```  
 _**Note:** Can Ctrl-C as this is a one-time publication of a static transform._  
+
+Terminal 3:  
+```
+ros2 topic pub /destination_frame std_msgs/msg/String "data: 'front_turtle_frame'"
+```
 
 ##### 2. Examining the environment
 
@@ -498,6 +505,56 @@ QoS profile:
   Liveliness: AUTOMATIC
   Liveliness lease duration: 9223372036854775807 nanoseconds
 ```
+
+##### 3. Plugin `gazebo_ros_state`
+
+This is a world plugin, declared in the world file `turtle_sea.world`, where it is also wrapped in the `cam_bot` namespace:
+```
+<?xml version="1.0" ?>
+
+<sdf version="1.6">
+  <world name="default">
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://ocean_plane</uri>
+      <pose>0 0 0.05 0 0 0</pose>
+    </include>
+
+    <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
+          <ros>
+            <namespace>/cam_bot</namespace>
+            <argument>model_states:=model_states_demo</argument>
+          </ros>
+          <update_rate>1.0</update_rate>
+    </plugin>
+
+  </world>
+</sdf>
+```
+
+##### 4. Node `cam_bot_force_node`
+
+It listens for `Twist` messages on `/cam_bot_cmd_vel` and publishes `Wrench` messages to `/cam_bot_force`. The file is [here](https://github.com/ivogeorg/turtle_3d/blob/main/scripts/cam_bot_force.py).   
+
+Launched in `spawn_cam_bot.launch.py`:
+```
+    cmd_vel_cam_bot = Node(
+            package='turtle_tf_3d_ros2',
+            executable='cam_bot_force.py',
+            output='screen',
+            name='cam_bot_force_node',
+            emulate_tty=True,
+            parameters=[{'use_sim_time': True}])
+```
+
+
 
 #### Unicycle
 
