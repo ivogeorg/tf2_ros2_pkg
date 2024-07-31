@@ -58,7 +58,13 @@ ros2 topic pub /destination_frame std_msgs/msg/String "data: 'front_turtle_frame
 [cam_bot_move.py-3] [INFO] [1722393605.556249797] [cam_bot_move_node]: 3 -- POSE DEST=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=0.6920888775494362, y=-0.22340196372656151, z=0.5099940399769324), orientation=geometry_msgs.msg.Quaternion(x=-0.3157860617359111, y=-0.13363551109521205, z=0.8650271990610675, w=-0.3662630997960471))
 [cam_bot_move.py-3] [INFO] [1722393605.556878412] [cam_bot_move_node]: 4 -- STATE to SEND=gazebo_msgs.msg.EntityState(name='cam_bot', pose=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=0.6920888775494362, y=-0.22340196372656151, z=0.5099940399769324), orientation=geometry_msgs.msg.Quaternion(x=0.3157860617359111, y=0.13363551109521205, z=-0.8650271990610675, w=0.3662630997960471)), twist=geometry_msgs.msg.Twist(linear=geometry_msgs.msg.Vector3(x=0.0, y=0.0, z=0.0), angular=geometry_msgs.msg.Vector3(x=0.0, y=0.0, z=0.0)), reference_frame='world')
 [cam_bot_move.py-3] [INFO] [1722393605.557310577] [cam_bot_move_node]: 5 -- Moved the Robot to frame =front_turtle_frame
-```
+```  
+
+###### 1.2 Gazebo screenshots
+
+| Initial pose | Destination pose |
+| --- | --- |
+| ![Initial](assets/cam_bot_initial_pose.png) | ![Destination](assets/cam_bot_destination_pose.png) |  
 
 ##### 2. Examining the environment
 
