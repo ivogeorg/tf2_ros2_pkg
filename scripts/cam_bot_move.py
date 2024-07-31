@@ -39,49 +39,45 @@ class CamBotMove(Node):
         self._model_name = model_name
 
         self.set_destination_frame(new_dest_frame=init_dest_frame)
-        self.set_translation_speed(speed=trans_speed)
-        self.set_rotation_speed(speed=rot_speed)
 
         # For the TF listener
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
-        self.timer_period = timer_period
-        self.timer_rate = 1.0 / self.timer_period
-        self.timer = self.create_timer(self.timer_period, self.timer_callback)
+        # Subscribe to /destination_frame topic
+        self.subscriber= self.create_subscription(String, '/destination_frame', self.move_callback, QoSProfile(depth=1))
 
-        self.subscriber= self.create_subscription(
-            String,
-            '/destination_frame',
-            self.move_callback,
-            QoSProfile(depth=1))
-
+        # Init client to /cam_bot/set_entity_state service by /cam_bot/gazebo_ros_state node
         self.set_entity_client = self.create_client(SetEntityState, "/cam_bot/set_entity_state")
+
+        # Wait for SetEntityState service
         while not self.set_entity_client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('service not available, waiting again...')
-        self.get_logger().info('service READY...')
+
+        self.get_logger().info('SetEntityState service READY...')
         
-        # create a request
+        # Create a service request
         self.req = SetEntityState.Request()
 
-        self.timer = self.create_timer(self.timer_period, self.timer_callback)
+        # Set up frequency of move time steps
+        self.timer_period = timer_period
+        # self.timer = self.create_timer(self.timer_period, self.timer_callback)
+        self.timer = self.create_timer(5, self.timer_callback)
 
-    def timer_callback(self):
-        self.move_step_speed()
-        self.get_logger().info("Moved the Robot to frame ="+str(self.objective_frame))
-
-    def set_translation_speed(self, speed):
-        self.trans_speed = speed
-    
-    def set_rotation_speed(self, speed):
-        self.rot_speed = speed
 
     def set_destination_frame(self, new_dest_frame):
         self.objective_frame = new_dest_frame
 
+
     def move_callback(self, msg):
         self.set_destination_frame(new_dest_frame=msg.data)
         
+
+    def timer_callback(self):
+        self.move_step_speed()
+        self.get_logger().info("5 -- Moved the Robot to frame ="+str(self.objective_frame))
+
+
     def move_step_speed(self):
         coordinates_to_move_to = self.calculate_coord()
         if coordinates_to_move_to is not None:
@@ -89,30 +85,24 @@ class CamBotMove(Node):
         else:
             self.get_logger().warning("No Coordinates available yet...")
 
+
     def get_model_pose_from_tf(self, origin_frame="world", dest_frame="camera_bot_base_link"):
         """
         Extract the pose from the TF
         """
         # Look up for the transformation between origin_frame and dest_frame
-        # and send velocity commands for self to reach dest_frame
         try:
             now = rclpy.time.Time()
-            trans = self.tf_buffer.lookup_transform(
-                origin_frame,
-                dest_frame,
-                now)
+            trans = self.tf_buffer.lookup_transform(origin_frame, dest_frame, now)
         except TransformException as ex:
-            self.get_logger().error(
-                f'Could not transform {origin_frame} to {dest_frame}: {ex}')
+            self.get_logger().error(f'Could not transform {origin_frame} to {dest_frame}: {ex}')
             return None
-
 
         translation_pose = trans.transform.translation
         rotation_pose = trans.transform.rotation
 
-        self.get_logger().info("type translation_pose="+str(type(translation_pose)))
-        self.get_logger().info("type rotation_pose="+str(type(rotation_pose)))
-
+        self.get_logger().info("1 -- type translation_pose="+str(type(translation_pose)))
+        self.get_logger().info("2 -- type rotation_pose="+str(type(rotation_pose)))
 
         pose = Pose()
         pose.position.x = translation_pose.x
@@ -126,13 +116,14 @@ class CamBotMove(Node):
         return pose
 
 
-
     def calculate_coord(self):
         """
         Gets the current position of the model and adds the increment based on the Publish rate
         """
         pose_dest = self.get_model_pose_from_tf(origin_frame="world", dest_frame=self.objective_frame)
-        self.get_logger().error("POSE DEST="+str(pose_dest))
+
+        self.get_logger().info("3 -- POSE DEST="+str(pose_dest))
+        
         if pose_dest is not None:
 
             explicit_quat = [pose_dest.orientation.x, pose_dest.orientation.y,
@@ -153,6 +144,7 @@ class CamBotMove(Node):
             coordinates_to_move_to = None
 
         return coordinates_to_move_to
+
 
     def move_model(self, coordinates_to_move_to):
 
@@ -196,7 +188,7 @@ class CamBotMove(Node):
 
         self.req.state = state
 
-        self.get_logger().error("STATE to SEND="+str(self.req.state))
+        self.get_logger().info("4 -- STATE to SEND="+str(self.req.state))
 
         # send the request
         try:     

@@ -20,6 +20,8 @@
 
 TF Listener and `EntityState` example based on the [turtle_tf_3d_ros2](https://github.com/ivogeorg/turtle_3d.git) repository. All the mentioned files below can be found there. The `meshes` directory was ignored because it was 470MB and not important for the research below. The file declaring a class `CamBotMove` is [here](https://github.com/ivogeorg/turtle_3d/blob/main/scripts/cam_bot_move.py).  
 
+The example shows how to move the Cam Bot using the `set_entity_state` service provided by the `gazebo_ros_state` plugin node, both scoped in the `cam_bot` namespace. The plugin is a world plugin and is declared in the `world` file. It provides both `get_entity_state` and `set_entity_state` services, among others. Most importantly, the topics `/cam_bot_cmd_vel` and `/cam_bot_force` are not used.
+
 ##### 1. Launching
 
 Terminal 1:  
@@ -46,6 +48,16 @@ _**Note:** Can Ctrl-C as this is a one-time publication of a static transform._
 Terminal 3:  
 ```
 ros2 topic pub /destination_frame std_msgs/msg/String "data: 'front_turtle_frame'"
+```
+
+###### 1.1 Sample output
+
+```
+[cam_bot_move.py-3] [INFO] [1722393605.555390366] [cam_bot_move_node]: 1 -- type translation_pose=<class 'geometry_msgs.msg._vector3.Vector3'>
+[cam_bot_move.py-3] [INFO] [1722393605.555766584] [cam_bot_move_node]: 2 -- type rotation_pose=<class 'geometry_msgs.msg._quaternion.Quaternion'>
+[cam_bot_move.py-3] [INFO] [1722393605.556249797] [cam_bot_move_node]: 3 -- POSE DEST=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=0.6920888775494362, y=-0.22340196372656151, z=0.5099940399769324), orientation=geometry_msgs.msg.Quaternion(x=-0.3157860617359111, y=-0.13363551109521205, z=0.8650271990610675, w=-0.3662630997960471))
+[cam_bot_move.py-3] [INFO] [1722393605.556878412] [cam_bot_move_node]: 4 -- STATE to SEND=gazebo_msgs.msg.EntityState(name='cam_bot', pose=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=0.6920888775494362, y=-0.22340196372656151, z=0.5099940399769324), orientation=geometry_msgs.msg.Quaternion(x=0.3157860617359111, y=0.13363551109521205, z=-0.8650271990610675, w=0.3662630997960471)), twist=geometry_msgs.msg.Twist(linear=geometry_msgs.msg.Vector3(x=0.0, y=0.0, z=0.0), angular=geometry_msgs.msg.Vector3(x=0.0, y=0.0, z=0.0)), reference_frame='world')
+[cam_bot_move.py-3] [INFO] [1722393605.557310577] [cam_bot_move_node]: 5 -- Moved the Robot to frame =front_turtle_frame
 ```
 
 ##### 2. Examining the environment
