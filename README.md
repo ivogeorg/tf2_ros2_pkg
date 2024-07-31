@@ -18,7 +18,7 @@
 
 #### TF Listener
 
-TF Listener and `EntityState` example based on the [turtle_tf_3d_ros2](https://github.com/ivogeorg/turtle_3d.git) repository. All the mentioned files below can be found there. The `meshes` directory was ignored because it was 470MB and not important for the research below. The file declaring a class `CamBotMove` is [here](https://github.com/ivogeorg/turtle_3d/blob/main/scripts/move_generic_model.py).  
+TF Listener and `EntityState` example based on the [turtle_tf_3d_ros2](https://github.com/ivogeorg/turtle_3d.git) repository. All the mentioned files below can be found there. The `meshes` directory was ignored because it was 470MB and not important for the research below. The file declaring a class `CamBotMove` is [here](https://github.com/ivogeorg/turtle_3d/blob/main/scripts/cam_bot_move.py).  
 
 ##### 1. Launching
 
